@@ -48,6 +48,7 @@ class UtilityMenuConfig:
                     data = yaml.safe_load(fh)
                     config.update(data)
                     log.info(f"Config Path: {path}")
+                self.path = path
                 break
             except FileNotFoundError:
                 pass
@@ -68,7 +69,7 @@ class UtilityMenuConfig:
 
         config = {**self.config}
 
-        utility = self.config['utilities'].get(utility_name, {})
+        utility = self.config['utilities'].get(utility_name) or {}
         del config['utilities']
 
         config.update(utility)

@@ -10,6 +10,7 @@ import sys
 from ..config import UtilityMenuConfig
 from .cli import CliInterface
 from .keepass import KeepassUtilityMenu
+from .semi_autokey import SemiAutokeyUtilityMenu
 
 
 log = logging.getLogger("utility_menu")
@@ -29,6 +30,10 @@ class MainCli(CliInterface):
             'keepass': {
                 'aliases': ['kp'],
                 'handler': self.run_keepass_menu
+            },
+            'semi-autokey': {
+                'aliases': ['sak', 'semi_autokey', 'semiautokey'],
+                'handler': self.run_semi_autokey_menu
             }
             # 'network_manager': {
             #     'aliases': ['nm', 'network-manager'],
@@ -43,6 +48,14 @@ class MainCli(CliInterface):
         config = self.config.get_utility("keepass")
 
         KeepassUtilityMenu(config).handle_args(args)
+
+
+    def run_semi_autokey_menu(self, args):
+
+        config = self.config.get_utility("semi_autokey")
+        config['config_path'] = self.config.path
+
+        SemiAutokeyUtilityMenu(config).handle_args(args)
 
 
 
